@@ -14,9 +14,22 @@ class GuesserTest : public ::testing::Test
 		virtual void TearDown(){} //clean up after each test, (before destructor)
 };
 
-/* Example test
-TEST(GuesserTest, smoke_test)
-{
-    ASSERT_EQ( 1+1, 2 );
+TEST(GuesserTest, GuessConstructer){
+	Guesser guess = Guesser("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbb");
+	bool actual = guess.match("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+	ASSERT_EQ(true, actual);
 }
-*/
+
+TEST(GuesserTest, Bruteforce){
+	Guesser guess = Guesser("abcd");
+	bool brute = guess.match("abcdefghijk"); //false
+	bool actual = guess.match("abcd"); //true
+	ASSERT_EQ(true, (brute == actual));
+}
+
+TEST(GuesserTest, DisOf2){
+	Guesser guess = Guesser("aa");
+	guess.match("b");
+	int actual = guess.remaining();
+	ASSERT_EQ(2, actual);
+}
